@@ -112,36 +112,32 @@ stress --cpu 4 --timeout 600
   
   ![ASG Activity History](./11-asg-activity-history.png)
 
-Skills Demonstrated
+## 🛠️ Skills Demonstrated
 
-IAM Administration & Least-Privilege Design Patterns
+* **IAM Administration & Least-Privilege Design Patterns**
+* **Custom Network Layer Design** (VPC, Subnetting, Ingress/Egress Routing)
+* **Public Cloud Security Auditing & Structural Governance**
+* **Attack Surface Mapping and Vulnerability Remediation**
+* **Distributed Systems High-Availability Engineering**
+* **Infrastructure Performance Testing & Load Simulation**
+* **Cloud Monitoring, Metrics Aggregation, and Observability**
 
-Custom Network Layer Design (VPC, Subnetting, Ingress/Egress Routing)
+---
 
-Public Cloud Security Auditing & Structural Governance
+## 💡 Lessons Learned
 
-Attack Surface Mapping and Vulnerability Remediation
+> **Continuous Auditing Over Reactive Remediation:** Security postures change rapidly during active deployment cycles. Utilizing automated scanning loops (like IAM Access Analyzer) continuously prevents configuration drift before vulnerabilities reach a production scope.
 
-Distributed Systems High-Availability Engineering
+> **Blast Radii Reduction via Principle of Least Privilege:** Restricting developer and service roles to precisely what they require ensures that credential leaks or system compromises do not grant an attacker full control of the cloud environment.
 
-Infrastructure Performance Testing & Load Simulation
+> **Security Must Complement High Availability:** Hardening the security architecture of an environment is meaningless if the application goes offline due to basic resource constraints. True cloud engineering treats scalability as a core tenant of operational security.
 
-Cloud Monitoring, Metrics Aggregation, and Observability
+> **Validation via Failure Injection:** You don't truly know if your monitoring or scaling policies work until you intentionally try to break them. Simulating live production failures via stress utilities is crucial to verifying automation boundaries before an actual emergency incident occurs.
 
-Lessons Learned
+---
 
-Continuous Auditing Over Reactive Remediation: Security postures change rapidly during active deployment cycles. Utilizing automated scanning loops (like IAM Access Analyzer) continuously prevents configuration drift before vulnerabilities reach a production scope.
+## 📈 Business Impact
 
-Blast Radii Reduction via Principle of Least Privilege: Restricting developer and service roles to precisely what they require ensures that credential leaks or system compromises do not grant an attacker full control of the cloud environment.
-
-Security Must Complement High Availability: Hardening the security architecture of an environment is meaningless if the application goes offline due to basic resource constraints. True cloud engineering treats scalability as a core tenant of operational security.
-
-Validation via Failure Injection: You don't truly know if your monitoring or scaling policies work until you intentionally try to break them. Simulating live production failures via stress utilities is crucial to verifying automation boundaries before an actual emergency incident occurs.
-
-Business Impact
-
-Drastically Reduced Attack Surface: Eliminated open entry points to compute nodes and sealed storage layers containing proprietary data.
-
-Hardened Security Governance: Aligned corporate permission matrices directly with AWS security best practices and compliance benchmarks.
-
-Guaranteed Business Continuity: Proven via active load simulation that security modifications did not impact application elasticity, ensuring optimal uptime and automated self-healing during high-traffic business events.
+* **Drastically Reduced Attack Surface:** Eliminated open entry points to compute nodes and sealed storage layers containing proprietary data.
+* **Hardened Security Governance:** Aligned corporate permission matrices directly with AWS security best practices and compliance benchmarks.
+* **Guaranteed Business Continuity:** Proven via active load simulation that security modifications did not impact application elasticity, ensuring optimal uptime and automated self-healing during high-traffic business events.
