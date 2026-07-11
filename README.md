@@ -96,13 +96,19 @@ To validate the architecture, the `stress` utility was introduced directly into 
 ```bash
 stress --cpu 4 --timeout 600
 
-Validation Results
+### Validation Results
 
-Metric Spike Trace: CloudWatch captured the breach immediately, illustrating a sharp upward trajectory peaking at 100% capacity in a distinct pyramid pattern (08-cpu-utilization-spike.png).
+* **Metric Spike Trace:** CloudWatch captured the breach immediately, illustrating a sharp upward trajectory peaking at 100% capacity in a distinct pyramid pattern.
+  
+  ![CPU Utilization Spike Trace](./08-cpu-utilization-spike.png)
 
-Horizontal Scaling Launch: The scaling policy evaluated the anomaly and automatically triggered an orchestration action, provisioning a parallel backup EC2 instance into service within 180 seconds to absorb the load (10-asg-scale-out-instances.png).
+* **Horizontal Scaling Launch:** The scaling policy evaluated the anomaly and automatically triggered an orchestration action, provisioning a parallel backup EC2 instance into service within 180 seconds to absorb the load.
+  
+  ![ASG Scale-Out Instances](./10-asg-scale-out-instances.png)
 
-Orchestration Log Auditing: The Auto Scaling Group activity records confirmed successful infrastructure provisioning and health check execution under load (11-asg-activity-history.png).
+* **Orchestration Log Auditing:** The Auto Scaling Group activity records confirmed successful infrastructure provisioning and health check execution under load.
+  
+  ![ASG Activity History](./11-asg-activity-history.png)
 
 Skills Demonstrated
 
