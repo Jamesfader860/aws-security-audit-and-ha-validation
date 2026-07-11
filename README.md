@@ -94,7 +94,8 @@ To resolve this infrastructural limit, an Application Load Balancer and an Auto 
 
 To validate the architecture, the `stress` utility was introduced directly into the instance environment to emulate an emergency compute crunch:
 ```bash
-stress --cpu 4 --timeout 600
+
+stress --cpu 4 --timeout 600```
 
 ### Validation Results
 
