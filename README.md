@@ -38,6 +38,7 @@ graph TD
         IAM[AWS Identity & Access Management] -->|Scans Authorization Scope| AA[IAM Access Analyzer]
         AA -->|Enforces Global Blocks| S3[Amazon S3 Hardened Buckets]
     end
+```
 
 graph LR
     subgraph Identity_Governance [Security & Audit Pillar]
