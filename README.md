@@ -73,16 +73,11 @@ graph TB
     Proxy -->|Scale-Out Vector| Node_B
     
     %% Scaling Triggers
-    Node_A -.->|CPU > 50% Threshold| Metrics
-    Metrics -->|Trips State Change| Alarm
-    Alarm -->|Orchestrates Launch| Node_B
+    Node_A -.->|CPU Spike| Metrics
+    Metrics -->|Threshold Breach| Alarm
+    Alarm -->|Launch Signal| Node_B
 
-    %% Verification Proof Mappings
-    click Proxy "[https://github.com/your-username/aws-security-audit-and-ha-validation/blob/main/02-load-balancer-created.png](https://github.com/your-username/aws-security-audit-and-ha-validation/blob/main/02-load-balancer-created.png)" "View Load Balancer Proof"
-    click Node_A "[https://github.com/your-username/aws-security-audit-and-ha-validation/blob/main/05-single-instance-running.png](https://github.com/your-username/aws-security-audit-and-ha-validation/blob/main/05-single-instance-running.png)" "View Baseline Instance"
-    click Node_B "[https://github.com/your-username/aws-security-audit-and-ha-validation/blob/main/10-asg-scale-out-instances.png](https://github.com/your-username/aws-security-audit-and-ha-validation/blob/main/10-asg-scale-out-instances.png)" "View Scale Out Event"
-    click Metrics "[https://github.com/your-username/aws-security-audit-and-ha-validation/blob/main/08-cpu-utilization-spike.png](https://github.com/your-username/aws-security-audit-and-ha-validation/blob/main/08-cpu-utilization-spike.png)" "View CloudWatch Pyramid Spike"
- 
+
 graph LR
     subgraph Identity_Governance [Security & Audit Pillar]
         IAM[AWS IAM <br> Access Rules] --->|Scans Privilege Blocks| AA[IAM Access Analyzer]
@@ -102,6 +97,7 @@ graph LR
     style EC2 fill:#FF9900,color:#ffffff,stroke:none
     style CW fill:#4D27AA,color:#ffffff,stroke:none
     style ASG fill:#FF9900,color:#ffffff,stroke:none
+
 
 ## Services Utilized & Engineering Purpose
 
