@@ -40,6 +40,10 @@ graph TD
     end
 ```
 
+### Modern Service Dependency Matrix
+*This clean system component layout map represents structural relations using the modern AWS product hierarchy design layout rules.*
+
+```mermaid
 graph LR
     subgraph Identity_Governance [Security & Audit Pillar]
         IAM(AWS IAM Access Rules) ---> AA(IAM Access Analyzer)
@@ -51,6 +55,7 @@ graph LR
         EC2 <---> CW(Amazon CloudWatch Logging)
         CW ---> ASG_Engine(EC2 Auto Scaling Groups)
     end
+```
 
 ## Services Utilized & Engineering Purpose
 
