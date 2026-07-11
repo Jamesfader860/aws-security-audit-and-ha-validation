@@ -15,25 +15,29 @@ The objective of this engagement was to map out security risks, execute strict r
 
 ## Architecture & Service Diagrams
 
-### 1. AWS Well-Architected Infrastructure Diagram
-*This dynamic multi-AZ visual trace models network containment boundaries, horizontal scaling groups, and traffic routing tiers.*
+### System Infrastructure and Service Dependency Graph
+*This map models the complete relational flow across your environment, from public traffic ingress down through the security audit and automated monitoring layers.*
 
 ```mermaid
 graph TD
-    User(Public Traffic Ingress) --> IGW(Internet Gateway)
-    IGW --> ALB(Application Load Balancer)
-
-    subgraph Amazon_VPC [Amazon VPC - 10.0.0.0/16]
-        ALB -->|Layer-7 Route| EC2_A(EC2 Instance: Baseline Node)
-        ALB -->|Scale-Out Vector| EC2_B(EC2 Instance: Dynamic Scale Target)
+    User[Public Web Traffic] --> IGW[Internet Gateway]
+    IGW --> ALB[Application Load Balancer]
+    
+    subgraph Network_and_Compute [AWS Elastic Core]
+        ALB --> VPC[Custom VPC Network Layer]
+        VPC --> ASG[EC2 Auto Scaling Group]
+        ASG --> EC2[Amazon EC2 Clusters]
     end
 
-    subgraph Telemetry_Framework [CloudWatch Observability]
-        EC2_A -.->|CPU Load Over 50%| CW_Metrics(CloudWatch Telemetry Engine)
-        CW_Metrics -->|Trips Alarm| ASG(EC2 Auto Scaling Group)
-        ASG -->|Launches Capacity| EC2_B
+    subgraph Observability_Loop [CloudWatch Monitoring Engine]
+        EC2 <-->|Streams Metrics & CPU Logs| CW[Amazon CloudWatch]
+        CW -.->|Triggers Scale-Out Breach Alarm| ASG
     end
 
+    subgraph Governance_and_Storage [Security & Audit Pillar]
+        IAM[AWS Identity & Access Management] -->|Scans Authorization Scope| AA[IAM Access Analyzer]
+        AA -->|Enforces Global Blocks| S3[Amazon S3 Hardened Buckets]
+    end
 
 graph LR
     subgraph Identity_Governance [Security & Audit Pillar]
