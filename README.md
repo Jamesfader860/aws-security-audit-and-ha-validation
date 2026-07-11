@@ -19,85 +19,33 @@ The objective of this engagement was to map out security risks, execute strict r
 *This dynamic multi-AZ visual trace models network containment boundaries, horizontal scaling groups, and traffic routing tiers.*
 
 ```mermaid
-graph TB
-    %% Styling and Theme definitions for modern AWS theme
-    classDef Internet fill:#f5f5f5,stroke:#232F3E,stroke-width:2px;
-    classDef Network fill:none,stroke:#7AA116,stroke-width:2px,stroke-dasharray: 5 5;
-    classDef ALB fill:#8C4FFF,stroke:#ffffff,stroke-width:2px,font-weight:bold,color:#ffffff;
-    classDef Subnet fill:none,stroke:#00A1C9,stroke-width:2px;
-    classDef ASG fill:none,stroke:#FF9900,stroke-width:2px,stroke-dasharray: 5 5;
-    classDef Compute fill:#FF9900,stroke:#ffffff,stroke-width:1px,color:#ffffff;
-    classDef Storage fill:#3F8624,stroke:#ffffff,stroke-width:1px,color:#ffffff;
+graph TD
+    User(Public Traffic Ingress) --> IGW(Internet Gateway)
+    IGW --> ALB(Application Load Balancer)
 
-    User([Public Traffic Ingress]) ::: Internet
-    IGW[Internet Gateway] ::: Network
-    
-    subgraph VPC [Amazon VPC Context - 10.0.0.0/16]
-        direction TB
-        
-        Proxy[Application Load Balancer <br> Target Group Tier] ::: ALB
-        
-        subgraph AZ_A [Availability Zone A]
-            direction TB
-            subgraph Subnet_A [Public Subnet A - 10.0.1.0/24]
-                direction TB
-                subgraph ASG_Group [ticketing-app-asg]
-                    Node_A[EC2 Instance <br> Baseline Node] ::: Compute
-                end
-            end
-        end
-
-        subgraph AZ_B [Availability Zone B]
-            direction TB
-            subgraph Subnet_B [Public Subnet B - 10.0.2.0/24]
-                direction TB
-                Node_B[EC2 Instance <br> Scale-Out Target] ::: Compute
-            end
-        end
+    subgraph Amazon_VPC [Amazon VPC - 10.0.0.0/16]
+        ALB -->|Layer-7 Route| EC2_A(EC2 Instance: Baseline Node)
+        ALB -->|Scale-Out Vector| EC2_B(EC2 Instance: Dynamic Scale Target)
     end
 
-    subgraph Security_Audit_Layer [Out-of-Band Security Assessment]
-        Analyzer[IAM Access Analyzer] ::: Storage
-        S3[Hardened S3 Bucket] ::: Storage
+    subgraph Telemetry_Framework [CloudWatch Observability]
+        EC2_A -.->|CPU Load Over 50%| CW_Metrics(CloudWatch Telemetry Engine)
+        CW_Metrics -->|Trips Alarm| ASG(EC2 Auto Scaling Group)
+        ASG -->|Launches Capacity| EC2_B
     end
-
-    subgraph Telemetry [CloudWatch Observability Framework]
-        Metrics[CloudWatch Telemetry Engine] ::: ALB
-        Alarm[Dynamic Scale Out Alarm Trigger] ::: Compute
-    end
-
-    %% Network Routing Traces
-    User --> IGW
-    IGW --> Proxy
-    Proxy -->|Layer-7 Route| Node_A
-    Proxy -->|Scale-Out Vector| Node_B
-    
-    %% Scaling Triggers
-    Node_A -.->|CPU Spike| Metrics
-    Metrics -->|Threshold Breach| Alarm
-    Alarm -->|Launch Signal| Node_B
 
 
 graph LR
     subgraph Identity_Governance [Security & Audit Pillar]
-        IAM[AWS IAM <br> Access Rules] --->|Scans Privilege Blocks| AA[IAM Access Analyzer]
-        AA --->|Global Block Applied| S3[Amazon S3 <br> Object Storage]
+        IAM(AWS IAM Access Rules) ---> AA(IAM Access Analyzer)
+        AA ---> S3(Amazon S3 Object Storage)
     end
 
     subgraph Elastic_Core [Compute & Automation Layer]
-        VPC[Amazon VPC] ---> EC2[Amazon EC2 Compute Node]
-        EC2 <--->|Metrics Stream| CW[Amazon CloudWatch Logging]
-        CW --->|Orchestration Request| ASG[EC2 Auto Scaling Groups]
+        VPC(Amazon VPC) ---> EC2(Amazon EC2 Compute Node)
+        EC2 <---> CW(Amazon CloudWatch Logging)
+        CW ---> ASG_Engine(EC2 Auto Scaling Groups)
     end
-    
-    style IAM fill:#CD2264,color:#ffffff,stroke:none
-    style AA fill:#CD2264,color:#ffffff,stroke:none
-    style S3 fill:#3F8624,color:#ffffff,stroke:none
-    style VPC fill:#7AA116,color:#ffffff,stroke:none
-    style EC2 fill:#FF9900,color:#ffffff,stroke:none
-    style CW fill:#4D27AA,color:#ffffff,stroke:none
-    style ASG fill:#FF9900,color:#ffffff,stroke:none
-
 
 ## Services Utilized & Engineering Purpose
 
