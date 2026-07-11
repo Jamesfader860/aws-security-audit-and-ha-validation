@@ -80,15 +80,21 @@ graph LR
 | **Public S3 Bucket** | Corporate asset exposure and data leak vulnerability due to disabled public access blocks. | Enabled AWS Block Public Access globally at the bucket level. | `06-s3-public-blocked.png` |
 | **SSH Open to Internet** | Global inbound port 22 access (0.0.0.0/0) welcoming external brute-force vectors. | Scoped inbound security group rules tightly to authorized IP vectors only. | `07-security-group-hardened.png` |
 
-The Bottleneck
-During initial baseline load assessments, testing confirmed that while the application was reachable and reading correctly (07-application-running.png), the application stack experienced complete connection timeouts and session drops under synthetic traffic spikes.
+### The Bottleneck
+During initial baseline load assessments, testing confirmed that while the application was reachable and reading correctly, the application stack experienced complete connection timeouts and session drops under synthetic traffic spikes.
 
-Deep-dive monitoring of baseline telemetry (06-baseline-cloudwatch-metrics.png) revealed that a single compute node was forced to maintain 100% CPU utilization without any mechanism to distribute load or spawn parallel compute capacity. This architectural choke point represented an unmitigated operational risk, exposing the business to prolonged downtime under unexpected user surges.
+![Application Running Baseline](./07-application-running.png)
 
-Resolution & Elastic Validation
+Deep-dive monitoring of baseline telemetry revealed that a single compute node was forced to maintain 100% CPU utilization without any mechanism to distribute load or spawn parallel compute capacity. This architectural choke point represented an unmitigated operational risk, exposing the business to prolonged downtime under unexpected user surges.
+
+![Baseline CloudWatch Metrics](./06-baseline-cloudwatch-metrics.png)
+
+### Resolution & Elastic Validation
 To resolve this infrastructural limit, an Application Load Balancer and an Auto Scaling Group were deployed. A target tracking policy was engineered with an aggressive threshold set at 50% average CPU Utilization monitored over 1-minute intervals via CloudWatch Metrics.
 
-To validate the architecture, the stress utility was introduced directly into the instance environment to emulate an emergency compute crunch: stress --cpu 4 --timeout 600
+To validate the architecture, the `stress` utility was introduced directly into the instance environment to emulate an emergency compute crunch:
+```bash
+stress --cpu 4 --timeout 600
 
 Validation Results
 
