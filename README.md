@@ -1,15 +1,13 @@
-# aws-security-audit-and-ha-validation
-An end-to-end AWS security audit, vulnerability remediation, and high-availability validation using ALB, Auto Scaling, and CloudWatch metrics
-
-# AWS Security Hardening, Infrastructure Audit, and High-Availability Validation
+# AWS Infrastructure Modernization: Security Hardening and Elastic Compute Validation
 
 ## Project Overview
-This project simulates a real-world AWS security assessment by intentionally introducing common cloud security misconfigurations, performing a structured audit to identify unauthorized access risks, and implementing remediation using AWS security best practices. Additionally, this project diagnoses and eliminates infrastructure elasticity bottlenecks by implementing and validating an automated scaling architecture under synthetic load, aligning the entire environment with the pillars of the AWS Well-Architected Framework.
+This project simulates a comprehensive AWS infrastructure modernization engagement. The engagement began with a security audit that identified unauthorized access risks across IAM, Amazon S3, and EC2 security groups. After remediating those findings, the infrastructure was enhanced to improve operational resilience by implementing an Application Load Balancer, EC2 Auto Scaling Group, and CloudWatch-based scaling policies. The completed environment was validated through synthetic load testing to confirm its ability to automatically scale in response to changing application demand while maintaining secure access controls.
+
 
 ## Business Scenario
-An organization requested an external infrastructure security audit after concerns that years of rapid deployment cycles had introduced excessive IAM permissions, publicly exposed storage buckets, and overly permissive firewall rules. Furthermore, the application suffered from complete performance degradation during unpredicted traffic surges. 
+An organization requested an external assessment after years of rapid cloud adoption introduced inconsistent security controls and infrastructure limitations. The assessment identified excessive IAM permissions, publicly accessible storage resources, and overly permissive network access. In addition, the production application experienced significant performance degradation during unexpected traffic surges due to fixed compute capacity.
 
-The objective of this engagement was to map out security risks, execute strict remediation steps without disrupting the baseline environment, introduce automated elasticity to handle traffic bottlenecks, and validate the system's real-time recovery response using heavy performance load testing.
+The objective of this engagement was to remediate security vulnerabilities, implement scalable infrastructure using AWS-native services, and validate both the security posture and application performance under simulated production workloads.
 
 ---
 
